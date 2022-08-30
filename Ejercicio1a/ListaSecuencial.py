@@ -50,9 +50,11 @@ class ListaSecuencial:
     
     def Buscar(self,elemento):
         pos = -1
-        for i in range(self.__actualVacio):
+        i = 0 
+        while i < self.__actualVacio and pos == -1:
             if self.Recuperar(i) == elemento:
                 pos = i
+            i+=1
         if pos == -1:
             print("Elemento no encontrado")
         else:
