@@ -1,7 +1,6 @@
-
 import numpy as np
 
-class ListaSecuencial:
+class ListaSecuencialContenido:
     __arreglo = None
     __actualVacio = None
 
@@ -22,19 +21,17 @@ class ListaSecuencial:
         
         return self.__arreglo[posicion]
     
-    def Insertar(self,elemento,posicion):
+    def Insertar(self,elemento):
         if self.lleno():
             print("Lista llena")
-        elif posicion-1 > self.__actualVacio:
-            print("Posicion no valida")
-        elif posicion-1 == self.__actualVacio:
-            self.__arreglo[self.__actualVacio] = elemento
+        else:
+            i=0
+            while self.__arreglo[i] < elemento and i < len(self.__arreglo):
+                i+=1
+            for j in range(self.__actualVacio,i,-1):
+                self.__arreglo[j] = self.__arreglo[j-1]
+            self.__arreglo[i] = elemento
             self.__actualVacio += 1
-        elif posicion-1 < self.__actualVacio:
-            for i in range(self.__actualVacio,posicion-1,-1):
-                self.__arreglo[i] = self.__arreglo[i-1]
-            self.__arreglo[posicion-1] = elemento
-            self.__actualVacio +=1
     
     def Suprimir(self,posicion):
         if self.vacio():
