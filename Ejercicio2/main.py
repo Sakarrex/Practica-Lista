@@ -7,8 +7,8 @@ if __name__ == '__main__':
     UnaLista.Insertar(5,1)
     UnaLista.Insertar(7,2)
     UnaLista.Insertar(9,4)
-    UnaLista.Recorrer()
-    print(UnaLista.Ultimo_Elemento())
+    UnaLista.Mostrar()
+    
     
     
     print("--------------------------")

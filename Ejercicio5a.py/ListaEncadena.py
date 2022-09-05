@@ -1,7 +1,8 @@
-import csv
+
+from ast import Num
 from NodoLista import NodoLista
 
-class ListaEncadenadaContenido:
+class ListaEncadenada:
     __cabeza = None
     __cantidad = None
     
@@ -9,41 +10,25 @@ class ListaEncadenadaContenido:
     def __init__(self) -> None:
         self.__cabeza = None
         self.__cantidad = 0
-
-        archivo = open("SuperficieIncendios.csv")
-        reader = csv.reader(archivo,delimiter=";")
-        cabecera = False
-        provincia = ""
-        hectareas = 0
-        for line in reader:
-            if cabecera == False:
-                cabecera = True
-                provincia = line[3]
-                hectareas += float(line[6])
-            else:
-                if provincia != line[3]:
-                    NuevoNodo = NodoLista(provincia,hectareas)
-                    self.Insertar(NuevoNodo)
-                    provincia = line[3]
-                    hectareas = float(line[6])
-                else:
-                    hectareas += float(line[6])
-                
-                
-
         
 
-    def Insertar(self,NuevoNodo):
-        if self.__cabeza == None or self.__cabeza.getHectareas() < NuevoNodo.getHectareas():
-            NuevoNodo.setSiguiente(self.__cabeza)
-            self.__cabeza = NuevoNodo
+    def Insertar(self,elemento,posicion):
+        if posicion < 0 or posicion > self.__cantidad+1:
+            print("Posicion no valida")
         else:
-            aux = self.__cabeza
-            while aux.getSiguiente() != None and aux.getSiguiente().getHectareas() > NuevoNodo.getHectareas():
-                aux = aux.getSiguiente()
-            NuevoNodo.setSiguiente(aux.getSiguiente())
-            aux.setSiguiente(NuevoNodo)
-        
+            NuevoNodo = NodoLista(elemento)
+            if self.__cabeza == None or posicion == 1:
+                NuevoNodo.setSiguiente(self.__cabeza)
+                self.__cabeza = NuevoNodo
+            else:
+                aux = self.__cabeza
+                actualPos = 1
+                while actualPos < posicion-1:
+                    aux = aux.getSiguiente()
+                    actualPos += 1
+                NuevoNodo.setSiguiente(aux.getSiguiente())
+                aux.setSiguiente(NuevoNodo)
+            self.__cantidad+=1
 
 
 
@@ -79,10 +64,15 @@ class ListaEncadenadaContenido:
             print("Elemento encontrado")
 
     def Recorrer(self):
-        aux = self.__cabeza
-        while aux != None:
-            print(aux)
-            aux= aux.getSiguiente()
+        if self.vacio():
+            print("Lista vacia")
+        else:
+            aux = self.__cabeza.getSiguiente()
+            cadena = str(self.__cabeza.getValor())
+            while aux != None:
+                cadena += "," + str(aux.getValor())
+                aux= aux.getSiguiente()
+            print(cadena)
 
     def Primer_Elemento(self):
         return self.__cabeza.getValor()
@@ -112,4 +102,20 @@ class ListaEncadenadaContenido:
            
             return aux.getSiguiente().getValor()
 
-
+    def BorrarDuplicados(self):
+        if self.vacio():
+            print("Lista vacia")
+        else:
+            aux1 = self.__cabeza
+            
+            while aux1 != None and aux1.getSiguiente() != None:
+                Num = aux1.getValor()
+                aux2 = aux1
+               
+                while aux2 != None and aux2.getSiguiente() != None :
+                    sig = aux2.getSiguiente()
+                    if sig.getValor() == Num:
+                        aux2.setSiguiente(sig.getSiguiente())
+                    aux2 = aux2.getSiguiente()
+                aux1 = aux1.getSiguiente()
+    

@@ -95,7 +95,3 @@ class ListaSecuencial:
             raise ValueError
     
 
-
-
-
-        
