@@ -15,11 +15,15 @@ class ListaEncadenadaContenido:
         if self.__cabeza == None:
             self.__cabeza = NuevoNodo
         else:
-            aux = self.__cabeza
-            while aux.getSiguiente() != None and aux.getSiguiente().getValor() < elemento:
-                aux = aux.getSiguiente()
-            NuevoNodo.setSiguiente(aux.getSiguiente())
-            aux.setSiguiente(NuevoNodo)
+            if self.__cabeza.getValor() > elemento:
+                NuevoNodo.setSiguiente(self.__cabeza)
+                self.__cabeza = NuevoNodo
+            else:
+                aux = self.__cabeza
+                while aux.getSiguiente() != None and aux.getSiguiente().getValor() < elemento:
+                    aux = aux.getSiguiente()
+                NuevoNodo.setSiguiente(aux.getSiguiente())
+                aux.setSiguiente(NuevoNodo)
         
 
 

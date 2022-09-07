@@ -111,11 +111,17 @@ class ListaEncadenada:
             while aux1 != None and aux1.getSiguiente() != None:
                 Num = aux1.getValor()
                 aux2 = aux1
-               
-                while aux2 != None and aux2.getSiguiente() != None :
-                    sig = aux2.getSiguiente()
-                    if sig.getValor() == Num:
-                        aux2.setSiguiente(sig.getSiguiente())
+                
+                while aux2 != None:
+                    sig = aux2.getSiguiente() 
+                    if sig != None and sig.getValor() == Num:
+                            aux2.setSiguiente(sig.getSiguiente()) 
+                    elif sig != None and aux2.getValor() == sig.getValor():
+                        while sig != None and aux2.getValor() == sig.getValor():
+                            aux2.setSiguiente(sig.getSiguiente()) 
+                            sig = aux2.getSiguiente()
+                        
                     aux2 = aux2.getSiguiente()
+
                 aux1 = aux1.getSiguiente()
     

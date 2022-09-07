@@ -1,4 +1,3 @@
-import csv
 from NodoLista import NodoLista
 
 class ListaEncadenadaContenido:
@@ -9,40 +8,22 @@ class ListaEncadenadaContenido:
     def __init__(self) -> None:
         self.__cabeza = None
         self.__cantidad = 0
-
-        archivo = open("SuperficieIncendios.csv")
-        reader = csv.reader(archivo,delimiter=";")
-        cabecera = False
-        provincia = ""
-        hectareas = 0
-        for line in reader:
-            if cabecera == False:
-                cabecera = True
-                provincia = line[3]
-                hectareas += float(line[6])
-            else:
-                if provincia != line[3]:
-                    NuevoNodo = NodoLista(provincia,hectareas)
-                    self.Insertar(NuevoNodo)
-                    provincia = line[3]
-                    hectareas = float(line[6])
-                else:
-                    hectareas += float(line[6])
-                
-                
-
         
 
-    def Insertar(self,NuevoNodo):
-        if self.__cabeza == None or self.__cabeza.getHectareas() < NuevoNodo.getHectareas():
-            NuevoNodo.setSiguiente(self.__cabeza)
+    def Insertar(self,elemento):
+        NuevoNodo= NodoLista(elemento)
+        if self.__cabeza == None:
             self.__cabeza = NuevoNodo
         else:
-            aux = self.__cabeza
-            while aux.getSiguiente() != None and aux.getSiguiente().getHectareas() > NuevoNodo.getHectareas():
-                aux = aux.getSiguiente()
-            NuevoNodo.setSiguiente(aux.getSiguiente())
-            aux.setSiguiente(NuevoNodo)
+            if self.__cabeza.getValor() > elemento:
+                NuevoNodo.setSiguiente(self.__cabeza)
+                self.__cabeza = NuevoNodo
+            else:
+                aux = self.__cabeza
+                while aux.getSiguiente() != None and aux.getSiguiente().getValor() < elemento:
+                    aux = aux.getSiguiente()
+                NuevoNodo.setSiguiente(aux.getSiguiente())
+                aux.setSiguiente(NuevoNodo)
         
 
 
@@ -81,7 +62,7 @@ class ListaEncadenadaContenido:
     def Recorrer(self):
         aux = self.__cabeza
         while aux != None:
-            print(aux)
+            print(aux.getValor())
             aux= aux.getSiguiente()
 
     def Primer_Elemento(self):
@@ -112,4 +93,10 @@ class ListaEncadenadaContenido:
            
             return aux.getSiguiente().getValor()
 
-
+    def BorrarDuplicados(self):
+        aux = self.__cabeza
+        while aux != None and aux.getSiguiente() != None:
+            while aux.getSiguiente() != None and aux.getValor() == aux.getSiguiente().getValor():
+                aux.setSiguiente(aux.getSiguiente().getSiguiente())
+            aux= aux.getSiguiente()
+            
